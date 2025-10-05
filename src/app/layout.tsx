@@ -23,7 +23,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn('font-body antialiased')}>
+      <body className={cn('font-body antialiased')} suppressHydrationWarning>
         <AuthProvider>
           {children}
           <Toaster />
