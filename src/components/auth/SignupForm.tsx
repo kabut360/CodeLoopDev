@@ -47,9 +47,7 @@ export function SignupForm() {
         toast({
             variant: "destructive",
             title: "Sign Up Failed",
-            description: error.code === 'auth/email-already-in-use' 
-                ? "This email is already registered. Please log in." 
-                : "An unknown error occurred.",
+            description: error.message || "An unknown error occurred.",
         });
     } finally {
         setIsLoading(false);
