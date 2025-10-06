@@ -5,7 +5,7 @@ import { Logo } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getFirebaseAuth } from "@/lib/firebase";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -25,6 +25,7 @@ export default function AppHeader() {
 
   const handleSignOut = async () => {
     try {
+      const auth = getFirebaseAuth();
       await signOut(auth);
     } catch (error) {
       console.error("Error signing out:", error);

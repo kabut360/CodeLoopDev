@@ -10,10 +10,11 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "./firebase";
+import { getDb } from "./firebase";
 import type { Loop } from "@/types";
 
-const loopsCollection = collection(db, "loops");
+// Note: db is now a function getDb()
+const loopsCollection = collection(getDb(), "loops");
 
 export async function addLoop(loopData: Omit<Loop, "id" | "createdAt" | "explanation"> & { explanation?: string }): Promise<string> {
   const docRef = await addDoc(loopsCollection, {
@@ -24,7 +25,7 @@ export async function addLoop(loopData: Omit<Loop, "id" | "createdAt" | "explana
 }
 
 export async function getLoop(id: string): Promise<Loop | null> {
-  const docRef = doc(db, "loops", id);
+  const docRef = doc(getDb(), "loops", id);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {

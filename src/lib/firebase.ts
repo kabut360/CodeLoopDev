@@ -1,6 +1,6 @@
-import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
+import { getAuth, type Auth } from "firebase/auth";
+import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD0WeJZ1axm_xzHbDNpM2pG4LJvr_4uwkQ",
@@ -12,14 +12,19 @@ const firebaseConfig = {
   measurementId: "G-NJ08PQDBRS"
 };
 
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
+function getFirebaseApp(): FirebaseApp {
+    if (!getApps().length) {
+        return initializeApp(firebaseConfig);
+    }
+    return getApp();
 }
 
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app = getFirebaseApp();
 
-export { app, auth, db };
+// These are now getter functions to ensure they are only called on the client
+const getDb = () => getFirestore(app);
+const getFirebaseAuth = () => getAuth(app);
+
+
+export { app, getFirebaseAuth as auth, getDb as db };
+export { getDb, getFirebaseAuth };
