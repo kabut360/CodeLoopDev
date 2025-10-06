@@ -3,7 +3,7 @@
 /**
  * @fileOverview This file defines a Genkit flow for explaining generated code snippets based on the user's experience level.
  *
- * - explainGeneratedCode - A function that takes generated code and an experience level, and returns an explanation of the code.
+ * - explainGeneratedCode - A function that takes generated code and returns an explanation of the code for a junior developer.
  * - ExplainGeneratedCodeInput - The input type for the explainGeneratedCode function.
  * - ExplainGeneratedCodeOutput - The return type for the explainGeneratedCode function.
  */
@@ -13,9 +13,6 @@ import {z} from 'genkit';
 
 const ExplainGeneratedCodeInputSchema = z.object({
   code: z.string().describe('The code snippet to be explained.'),
-  experienceLevel: z
-    .enum(['junior', 'mid', 'senior'])
-    .describe('The experience level of the user.'),
 });
 export type ExplainGeneratedCodeInput = z.infer<
   typeof ExplainGeneratedCodeInputSchema
@@ -40,17 +37,14 @@ const prompt = ai.definePrompt({
   output: {schema: ExplainGeneratedCodeOutputSchema},
   prompt: `You are an AI expert in explaining code to developers of varying experience levels.
 
-You will receive a code snippet and the experience level of the developer.
-Your goal is to provide a clear, concise, and helpful explanation of the code tailored to their experience level.
+You will receive a code snippet. Your goal is to provide a clear, concise, and helpful explanation of the code tailored to a junior developer.
 
 Code Snippet:
 \`\`\`
 {{{code}}}
 \`\`\`
 
-Experience Level: {{{experienceLevel}}}
-
-Explanation:`, // Removed line break to avoid excessive spacing
+Explanation:`,
 });
 
 const explainGeneratedCodeFlow = ai.defineFlow(

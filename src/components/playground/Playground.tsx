@@ -18,15 +18,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Wand2, Loader2, Play, Copy, GitFork, BookOpen, ChevronRight, AlertTriangle } from "lucide-react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 const languages = ["JavaScript", "Python", "HTML", "Go", "TypeScript", "CSS"];
-const experienceLevels = [
-  { id: "junior", label: "Junior" },
-  { id: "mid", label: "Mid-level" },
-  { id: "senior", label: "Senior" },
-];
 
 const playgroundSchema = z.object({
   prompt: z.string().min(10, "Prompt must be at least 10 characters."),
@@ -48,7 +42,6 @@ export function Playground({ initialLoop }: Props) {
 
   const [code, setCode] = useState(initialLoop?.code ?? "");
   const [explanation, setExplanation] = useState(initialLoop?.explanation ?? "");
-  const [experienceLevel, setExperienceLevel] = useState<"junior" | "mid" | "senior">(initialLoop?.experienceLevel ?? "mid");
   const [parentLoopId, setParentLoopId] = useState<string | null>(initialLoop?.parentLoopId ?? null);
   const [currentLoopId, setCurrentLoopId] = useState<string | null>(initialLoop?.id ?? null);
   const [executionOutput, setExecutionOutput] = useState("");
@@ -105,7 +98,7 @@ export function Playground({ initialLoop }: Props) {
     
     startExplanationTransition(async () => {
         try {
-            const result = await explainGeneratedCode({ code, experienceLevel });
+            const result = await explainGeneratedCode({ code });
             setExplanation(result.explanation);
         } catch (error) {
             console.error("Explanation failed:", error);
@@ -238,17 +231,6 @@ export function Playground({ initialLoop }: Props) {
           <CardDescription>Get a line-by-line explanation of the code.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-            <div>
-              <Label className="mb-2 block">Your Experience Level</Label>
-              <RadioGroup value={experienceLevel} onValueChange={(v) => setExperienceLevel(v as any)} className="flex space-x-4">
-                  {experienceLevels.map(level => (
-                      <div key={level.id} className="flex items-center space-x-2">
-                          <RadioGroupItem value={level.id} id={`xp-${level.id}`} />
-                          <Label htmlFor={`xp-${level.id}`}>{level.label}</Label>
-                      </div>
-                  ))}
-              </RadioGroup>
-            </div>
             <Button onClick={handleExplainCode} className="w-full" variant="secondary" disabled={!code || isExplaining}>
                 {isExplaining ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ChevronRight className="mr-2 h-4 w-4" />}
                 Explain Code

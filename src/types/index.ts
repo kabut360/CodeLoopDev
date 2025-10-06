@@ -7,7 +7,6 @@ export interface Loop {
   language: string;
   code: string;
   explanation?: string;
-  experienceLevel?: 'junior' | 'mid' | 'senior';
   parentLoopId?: string | null;
   createdAt: Timestamp;
 }
