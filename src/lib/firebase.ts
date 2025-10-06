@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD0WeJZ1axm_xzHbDNpM2pG4LJvr_4uwkQ",
@@ -24,7 +25,13 @@ const app = getFirebaseApp();
 // These are now getter functions to ensure they are only called on the client
 const getDb = () => getFirestore(app);
 const getFirebaseAuth = () => getAuth(app);
+const getAnalyticsInstance = () => {
+    if (typeof window !== 'undefined') {
+        return getAnalytics(app);
+    }
+    return null;
+}
 
 
-export { app, getFirebaseAuth as auth, getDb as db };
-export { getDb, getFirebaseAuth };
+export { app, getFirebaseAuth as auth, getDb as db, getAnalyticsInstance as analytics };
+export { getDb, getFirebaseAuth, getAnalyticsInstance };
