@@ -6,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyD0WeJZ1axm_xzHbDNpM2pG4LJvr_4uwkQ",
   authDomain: "codeloop-5c108.firebaseapp.com",
   projectId: "codeloop-5c108",
-  storageBucket: "codeloop-5c108.appspot.com",
+  storageBucket: "codeloop-5c108.firebasestorage.app",
   messagingSenderId: "31617736587",
   appId: "1:31617736587:web:37b5b5a0150e721ba5198e",
   measurementId: "G-NJ08PQDBRS"
