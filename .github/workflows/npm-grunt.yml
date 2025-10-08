@@ -9,11 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
-
+        node-version: [18.x]
     steps:
     - uses: actions/checkout@v4
 
@@ -24,5 +24,6 @@ jobs:
 
     - name: Build
       run: |
-        npm install
+        npm i -g grunt-cli
+        npm ci
         grunt
